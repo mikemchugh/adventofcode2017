@@ -21,8 +21,14 @@ class DirectionSpec extends FlatSpec with Matchers {
 }
 
 class GenerateSpiralSpec extends FlatSpec with Matchers {
-  "generateSpiral" should "can" in {
+  "generateSpiral" should "can generate the expexted spiral" in {
     Day03.generateSpiral(1, 10, 1, 1, Day03.Right(), List((0,0))) should contain theSameElementsAs 
     List((2,-1), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1), (0,1), (1,1), (1,0), (0,0)) 
+  }
+}
+
+class firstValueHigherThanSpec extends FlatSpec with Matchers {
+  "firstValueHigherThan" should "be 363010 when number is 361527" in {
+    Day03.firstValueHigherThan(361527) shouldEqual 363010
   }
 }

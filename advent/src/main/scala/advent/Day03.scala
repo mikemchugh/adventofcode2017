@@ -63,4 +63,35 @@ object Day03 {
   val distance = math.abs(last._1) + math.abs(last._2)
   println(s"x: ${last._1}, y: ${last._2}")
   println(s"last coordinate is: $distance")
+
+  def coordinateValue(coordinate : Coordinate, values : Map[(Coordinate), Int]) : Int = {
+    values.getOrElse(coordinate, 0)
+  }
+
+  def calculateCoordinateValue(coordinate : Coordinate, values : Map[(Coordinate), Int]) = {
+    val value = (coordinateValue((coordinate._1 - 1, coordinate._2), values) // left
+      + coordinateValue((coordinate._1 + 1, coordinate._2), values) // right
+      + coordinateValue((coordinate._1, coordinate._2 + 1), values)  // up
+      + coordinateValue((coordinate._1, coordinate._2 - 1), values)  // down
+      + coordinateValue((coordinate._1 - 1, coordinate._2 - 1), values)  // bottom left
+      + coordinateValue((coordinate._1 + 1, coordinate._2 - 1), values)  // bottom right
+      + coordinateValue((coordinate._1 - 1, coordinate._2 + 1), values)  // top left
+      + coordinateValue((coordinate._1 + 1, coordinate._2 + 1), values))  // top right
+
+    (coordinate -> value)
+  }
+  
+  val initialMap = ((0, 0) -> 1)
+  generateSpiral(1, 250, 1, 1, Right(), List((0,0)))
+
+  def generateSpiralValues(coordinates : List[Coordinate], values : Map[Coordinate, Int]) : Map[Coordinate, Int] = coordinates match {
+    case Nil => values
+    case x :: xs => generateSpiralValues(xs, values + calculateCoordinateValue(x, values))
+  }
+
+  def firstValueHigherThan(number : Int) : Int = {
+    val initialMap = Map((0, 0) -> 1)
+    val coordinates = generateSpiral(1, 250, 1, 1, Right(), List((0,0)))
+    generateSpiralValues(coordinates.reverse.tail, initialMap).filter(c => c._2 > 361527).minBy(_._2)._2
+  }
 }
