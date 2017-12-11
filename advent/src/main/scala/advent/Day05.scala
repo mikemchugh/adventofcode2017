@@ -1,17 +1,21 @@
 package advent
 
 object Day05 {
-  def jump(input : IndexedSeq[Int], index : Int, count : Int) : Int = {
+  def jump(input : IndexedSeq[Int], index : Int, count : Int)(updateOffset : Int => Int) : Int = {
     if (index + input(index) >= input.length) {
       count
     }
     else {
       jump(
-        input.updated(index, input(index) + 1),
+        input.updated(index, updateOffset(input(index))),
         index + input(index),
-        count + 1)
+        count + 1)(updateOffset)
     }
   }
+
+   def jump(input : IndexedSeq[Int]) : Int = {
+     jump(input, 0, 1) { offset => offset + 1 }
+   }
 
   import scala.io.Source
   def readInput() = {
@@ -20,6 +24,6 @@ object Day05 {
 
   def justDoIt() : Int = {
     val input = readInput().map(_.toInt).toIndexedSeq
-    jump(input, 0, 1)
+    jump(input)
   }
 }
