@@ -13,16 +13,20 @@ object Day05 {
     }
   }
 
-   def jump(input : IndexedSeq[Int]) : Int = {
-     jump(input, 0, 1) { offset => offset + 1 }
-   }
+  def jump(input : IndexedSeq[Int]) : Int = {
+    jump(input, 0, 1) { offset => offset + 1 }
+  }
+
+  def jumpEvenStranger(input : IndexedSeq[Int]) : Int = {
+    jump(input, 0, 1) { offset => if (offset >= 3) offset - 1 else offset + 1 }
+  }
 
   import scala.io.Source
   def readInput() = {
     for (line <- Source.fromFile("day05input").getLines) yield line
   }
 
-  def justDoIt() : Int = {
+  def justDoIt(jump: IndexedSeq[Int] => Int) : Int = {
     val input = readInput().map(_.toInt).toIndexedSeq
     jump(input)
   }
