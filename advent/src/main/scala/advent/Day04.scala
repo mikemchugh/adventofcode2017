@@ -33,7 +33,4 @@ object Day04 {
   def uniqueSortedCount() : Int = {
     uniqueCount(sort _)
   }
-
-  println(s"Day04 uniqueCount = ${uniqueCount()}")
-  println(s"Day04 uniqueSortedCount = ${uniqueSortedCount()}")
 }

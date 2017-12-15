@@ -61,8 +61,6 @@ object Day03 {
 
   val last = generateSpiral(1, 361527, 1, 1, Right(), List((0,0))).head
   val distance = math.abs(last._1) + math.abs(last._2)
-  println(s"x: ${last._1}, y: ${last._2}")
-  println(s"last coordinate is: $distance")
 
   def coordinateValue(coordinate : Coordinate, values : Map[(Coordinate), Int]) : Int = {
     values.getOrElse(coordinate, 0)
