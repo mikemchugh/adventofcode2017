@@ -25,16 +25,20 @@ object Day06 {
     }
   }
 
-  def detectInfiniteLoop(map : Map[IndexedSeq[Int], Int], input : IndexedSeq[Int], count : Int) : Int = {
+  def detectInfiniteLoop(map : Map[IndexedSeq[Int], Int], input : IndexedSeq[Int], count : Int)(calc: (Int, Int) => Int) : Int = {
     if (map.getOrElse(input, 0) != 0) { 
-      count
+      calc(count, map(input))
     }
     else {
-      detectInfiniteLoop(map + (input -> 1), reallocationAmount(input, biggestMemoryBlockIndex(input)), count + 1)
+      detectInfiniteLoop(map + (input -> count), reallocationAmount(input, biggestMemoryBlockIndex(input)), count + 1)(calc)
     }
   }
 
   def detectInfiniteLoop(input : IndexedSeq[Int]) : Int = {
-    detectInfiniteLoop(Map(input -> 0), input, 0)
+    detectInfiniteLoop(Map(input -> 0), input, 0)((x, y) => x)
+  }
+
+  def countBetweenDuplicates(input : IndexedSeq[Int]) : Int = {
+    detectInfiniteLoop(Map(input -> 0), input, 0)((x, y) => x - y)
   }
 }
