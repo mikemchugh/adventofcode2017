@@ -3,19 +3,12 @@ package advent
 object Day07 {
   case class Disc(name : String, weight : Int, discsAboveReferences: Seq[String])
 
-  def discsAbove(disc : Disc, allDiscs : Seq[Disc]) = {
-    for {
-      aDisc <- allDiscs
-      if disc.discsAboveReferences.contains(aDisc.name)
-    } yield aDisc
-  }
+  def baseDisc(discs : Seq[Disc]) : String = {
+    val discAbove : Map[String, (Int, Seq[String])] = discs.map{ case Disc(name, weight, discsAboveReferences) => name -> (weight, discsAboveReferences) }.toMap
+    val allNames : Set[String] = discAbove.keySet
+    val allAboveNames : Set[String] = discAbove.values.flatMap { case (weight, above) => above }.toSet
 
-  def allAbove(discs : Seq[Disc]) : Seq[Disc] = {
-    discs flatMap (x => discsAbove(x, discs))
-  }
-
-  def baseDisc(discs : Seq[Disc]) : Disc = {
-    discs filter(allAbove(discs).contains(_) == false) head
+    (allNames diff allAboveNames).head
   }
 
   import scala.io.Source
@@ -30,7 +23,7 @@ object Day07 {
     Disc(name, weight, references)
   }
 
-  def partA() : Disc = {
+  def partA() : String = {
     val discs = readInput().map(line => makeDisc(line.split(" "))).toList
     baseDisc(discs)
   }
