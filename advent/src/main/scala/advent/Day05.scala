@@ -23,7 +23,7 @@ object Day05 {
 
   import scala.io.Source
   def readInput() = {
-    for (line <- Source.fromFile("day05input").getLines) yield line
+    for (line <- Source.fromFile("input/day05").getLines) yield line
   }
 
   def justDoIt(jump: IndexedSeq[Int] => Int) : Int = {

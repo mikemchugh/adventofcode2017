@@ -13,7 +13,7 @@ object Day07 {
 
   import scala.io.Source
   def readInput() = {
-    for (line <- Source.fromFile("day07input").getLines) yield line
+    for (line <- Source.fromFile("input/day07").getLines) yield line
   }
 
   def makeDisc(lineParts : Seq[String]) : Disc = {

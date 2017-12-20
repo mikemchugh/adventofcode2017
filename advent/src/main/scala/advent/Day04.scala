@@ -4,7 +4,7 @@ object Day04 {
   import scala.io.Source
 
   def readInput() = {
-    for (line <- Source.fromFile("day04input").getLines) yield line
+    for (line <- Source.fromFile("input/day04").getLines) yield line
   }
 
   def isUnique(line : List[String]) : Boolean = {
